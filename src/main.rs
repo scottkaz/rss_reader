@@ -1,21 +1,16 @@
 extern crate rss;
 
-use std::fs::File;
-use std::io::BufReader;
 use rss::Channel;
 
-fn main() {
-    let file = File::open("/home/skazimou/releases.xml").unwrap();
-    let channel = Channel::read_from(BufReader::new(file)).unwrap();
 
-    //println!("Channel: {}", channel.title());
-    //println!("Items: {}", channel.items().len());
+fn main() {
+    let kernel_rss_url = "https://www.kernel.org/feeds/kdist.xml";
+    let channel = Channel::from_url(kernel_rss_url).unwrap();
 
     for item in channel.items() {
         match item.title() {
             None => { println!("???"); }
             Some(s) => { println!("{}", s); }
         }
-        //println!("{}", item.content().unwrap_or_default());
     }
 }
